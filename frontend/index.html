@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/gain.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GAIN | 2025 SUMMIT</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+
+    <!-- Google Translate - Hidden -->
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,fr",
+            layout: google.translate.TranslateElement.InlineLayout.HIDE, // Use HIDE instead of SIMPLE
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+        
+        // Remove Google's branding if it appears
+        setTimeout(() => {
+          const googleBranding = document.querySelector('.goog-te-banner-frame');
+          if (googleBranding) {
+            googleBranding.style.display = 'none';
+          }
+          
+          const googleFooter = document.querySelector('.goog-te-ftab-frame');
+          if (googleFooter) {
+            googleFooter.style.display = 'none';
+          }
+        }, 1000);
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+
+  </body>
+</html>
