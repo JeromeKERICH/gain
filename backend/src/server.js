@@ -1,33 +1,41 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("./config/db");
+require("./config/db"); // MongoDB connection
 
 const authRoutes = require("./routes/auth");
 const paymentRoutes = require("./routes/paymentsRoutes");
 const ticketRoutes = require("./routes/ticketsRoutes");
-const adminRoutes = require("./routes/admin");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 
-
+// ✅ CORS setup for frontend only
 app.use(cors({
-  origin:  process.env.FRONTEND_URL, // your frontend port
+  origin: process.env.FRONTEND_URL, // e.g., https://yourfrontend.com
   methods: ["GET", "POST"],
   credentials: true
 }));
-app.use(express.json()); // default parser
 
+// ✅ Raw body parser for webhooks (Paystack needs raw body)
+app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
+
+// ✅ JSON parser for other endpoints
+app.use(express.json());
+
+// --- Health check
 app.get("/", (req, res) => res.send("GAIN API running 🚀"));
 
+// --- Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/payments", require("./routes/paymentsRoutes"));
+app.use("/api/payments", paymentRoutes);
 app.use("/api/tickets", ticketRoutes);
 
+// --- Error handler
 app.use(errorHandler);
 
+// --- Start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 );
